@@ -1,0 +1,19 @@
+<h1>部屋を編集 - {{ room.name }}</h1>
+
+{% if error %}
+<div style="color: red;">{{ error }}</div>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="name">部屋名</label>
+        <input type="text" id="name" name="name" value="{{ name | default:room.name }}">
+    </div>
+    
+    <div style="margin-top: 10px;">
+        <button type="submit">更新</button>
+        <a href="{% url 'hotel_detail' pk=room.hotel_id %}">詳細に戻る</a>
+    </div>
+</form>
+

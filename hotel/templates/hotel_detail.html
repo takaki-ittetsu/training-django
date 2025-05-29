@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .hidden {
+            display: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>ホテル概要ページ</h1>
+    <h2>ホテル情報</h2>
+    <ul>
+        <li>{{ hotel.name }}</li>
+        <li>{{ hotel.prefecture }}</li>
+    </ul>
+    
+    <h2>部屋一覧</h2>
+    <ul>
+        <button onclick="toggleEditMode()" style="margin-bottom: 8px;">部屋情報の編集</button>
+        {% for room in hotel.rooms %}
+        <li style="margin-bottom: 4px;">
+            {{ room.name }} 
+            <a class='EditMode hidden' 
+                href="{% url 'room_update' room_id=room.id %}" 
+                style="margin: 0 4px 0 8px; padding: 0 4px; background-color: grey; color: white;">
+                編集
+            </a>
+            <a class='EditMode hidden' 
+                href="{% url 'room_delete' room_id=room.id %}" 
+                style="margin: 0 4px; padding: 0 4px; background-color: rgb(255, 134, 134); color: white;">
+                削除
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <hr>
+    
+    <div>
+        <a href="{% url 'hotel_update' pk=hotel.id %}">ホテル情報を編集</a> | 
+        <a href="{% url 'hotel_delete' pk=hotel.id %}">ホテルを削除</a> | 
+        <a href="{% url 'room_create' hotel_id=hotel.id %}">部屋を追加</a> | 
+        <a href="{% url 'hotel_list' %}">ホテル一覧に戻る</a>
+    </div>
+
+    
+<script>
+    function toggleEditMode() {
+        const editElements = document.getElementsByClassName('EditMode');
+        for (let i = 0; i < editElements.length; i++) {
+            editElements[i].classList.toggle('hidden');
+        }
+    }
+</script>
+
+</body>
+</html>

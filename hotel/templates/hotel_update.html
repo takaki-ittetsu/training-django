@@ -1,0 +1,20 @@
+<h1>ホテル情報を編集</h1>
+
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form method="POST" action="{% url 'hotel_update' pk=hotel.id %}">
+    {% csrf_token %}
+    <div>
+        <label for="name">ホテル名</label>
+        <input type="text" id="name" name="name" value="{{ name | default:hotel.name }}">
+    </div>
+    <div>
+        <label for="prefecture">都道府県</label>
+        <input type="text" id="prefecture" name="prefecture" value="{{ prefecture | default:hotel.prefecture }}">
+    </div>
+    <button type="submit">更新</button>
+</form>
+
+<p><a href="{% url 'hotel_detail' pk=hotel.id %}">詳細に戻る</a></p>

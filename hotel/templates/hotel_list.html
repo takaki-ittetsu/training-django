@@ -1,0 +1,6 @@
+<p><a href="{% url 'hotel_create' %}">新しいホテルを追加</a></p>
+
+{% for hotel in hotels %}
+<h2><a href="{% url 'hotel_detail' hotel.id %}">{{ hotel.name }}</a></h2>
+<h3>{{ hotel.prefecture }}</h3>
+{% endfor %}

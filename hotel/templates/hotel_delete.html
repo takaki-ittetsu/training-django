@@ -1,0 +1,14 @@
+<h1>ホテルを削除</h1>
+
+<ul>
+    <li>{{ hotel.name }}</li>
+    <li>{{ hotel.prefecture }}</li>
+</ul>
+
+<form method="POST" action="{% url 'hotel_delete' pk=hotel.id %}">
+    {% csrf_token %}
+    <div style="margin-top: 10px;">
+        <button type="submit" style="margin-right: 4px;">削除する</button>
+        <a href="{% url 'hotel_detail' pk=hotel.id %}">キャンセル</a>
+    </div>
+</form>

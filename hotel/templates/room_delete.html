@@ -1,0 +1,14 @@
+<h1>部屋を削除</h1>
+
+<p>以下の部屋を削除してもよろしいですか？</p>
+<div>
+    <p>部屋名： {{ room.name }}</p>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <div style="margin-top: 10px;">
+        <button type="submit" style="margin-right: 4px;">削除</button>
+        <a href="{% url 'hotel_detail' pk=room.hotel_id %}">戻る</a>
+    </div>
+</form>
