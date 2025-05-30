@@ -1,0 +1,43 @@
+<h1>予約作成</h1>
+
+{% if error %}
+<div style="color: red;">{{ error }}</div>
+{% endif %}
+
+<div class="room-info">
+    <h2>部屋情報</h2>
+    <p><strong>部屋名：</strong> {{ room.name }}</p>
+    <p><strong>ホテルID：</strong> {{ room.hotel_id }}</p>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="price">価格：</label>
+        <span id="priceDisplay">---円</span>
+        <input type="hidden" id="price" name="price" required min="1">
+    </div>
+
+    <div>
+        <label for="stay_date">宿泊日：</label>
+        <input type="date" id="stay_date" name="stay_date" required>
+    </div>
+
+    <div>
+        <button type="submit" class="btn">予約する</button>
+        <a href="{% url 'hotel_detail' room.hotel_id %}" class="btn btn-cancel">キャンセル</a>
+    </div>
+</form>
+
+<script>
+    function setRandomPrice() {
+        const minPrice = 5000;
+        const maxPrice = 20000;
+
+        const randomPrice = Math.floor(Math.random() * (maxPrice - minPrice + 1)) + minPrice;
+
+        document.getElementById("priceDisplay").innerText = randomPrice + "円";
+        document.getElementById("price").value = randomPrice;
+    }
+    document.getElementById("stay_date").addEventListener("change", setRandomPrice);
+</script>

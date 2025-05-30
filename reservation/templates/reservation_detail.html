@@ -1,0 +1,14 @@
+<h1>予約詳細</h1>
+
+<div>
+    <p><strong>ホテル名：</strong> {{ reservation.hotel_name }} </p>
+    <p><strong>部屋名：</strong> {{ reservation.room_name }} </p>
+    <p><strong>価格：</strong> {{ reservation.price }}円 </p>
+    <p><strong>予約日：</strong> {{ reservation.reservation_date }} </p>
+    <p><strong>宿泊日：</strong> {{ reservation.stay_date }} </p>
+</div>
+
+<div>
+    <a href="{% url 'reservation_delete' reservation.id %}">この予約を削除</a> | 
+    <a href="{% url 'reservation_list' %}">予約一覧に戻る</a>
+</div>

@@ -1,0 +1,11 @@
+<h1>予約一覧</h1>
+
+<ul>
+    {% for reservation in reservations %}
+    <li>
+        <a href="{% url 'reservation_detail' reservation.id %}">
+            ホテル：{{ reservation.hotel_name }} - 宿泊日：{{ reservation.stay_date }}
+        </a>
+    </li>
+    {% endfor %}
+</ul> 
