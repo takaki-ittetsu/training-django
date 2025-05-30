@@ -1,6 +1,13 @@
 <p><a href="{% url 'hotel_create' %}">新しいホテルを追加</a></p>
 
 {% for hotel in hotels %}
-<h2><a href="{% url 'hotel_detail' hotel.id %}">{{ hotel.name }}</a></h2>
-<h3>{{ hotel.prefecture }}</h3>
+<div>
+    <h2>{{ hotel.name }}</h2>
+    <p>{{ hotel.prefecture }}</p>
+    {% if is_authenticated %}
+        <a href="{% url 'hotel_detail' hotel.id %}">詳細</a>
+    {% else %}
+        <a href="{% url 'login' %}">ログインして詳細を見る</a>
+    {% endif %}
+</div>
 {% endfor %}

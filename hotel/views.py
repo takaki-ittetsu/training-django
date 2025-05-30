@@ -1,15 +1,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import HotelManager, RoomManager
+from accounts.decorators import login_required
 
 def hotel_list(request):
     hotel_list = HotelManager.get_all_hotels()
-    return render(request, 'hotel_list.html', {'hotels' : hotel_list})
+    is_authenticated = 'user_id' in request.session
+    return render(request, 'hotel_list.html', {'hotels' : hotel_list, 'is_authenticated' : is_authenticated })
 
+@login_required
 def hotel_detail(request, pk):
     hotel = HotelManager.get_hotel_by_id(pk)
     return render(request, 'hotel_detail.html', { 'hotel' : hotel })
 
+@login_required
 def hotel_create(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -28,7 +32,7 @@ def hotel_create(request):
     # GET request の場合 ： Createページへ
     return render(request, 'hotel_create.html')
 
-
+@login_required
 def hotel_update(request, pk):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -50,7 +54,8 @@ def hotel_update(request, pk):
     hotel = HotelManager.get_hotel_by_id(pk)
     return render(request, 'hotel_update.html', {'hotel': hotel})
 
-def hotel_delete(request, pk):
+@login_required
+def hotel_delete(request, pk):   
     if request.method == 'POST':
         HotelManager.delete_hotel(pk)
         return redirect('hotel_list')
@@ -59,6 +64,7 @@ def hotel_delete(request, pk):
     hotel = HotelManager.get_hotel_by_id(pk)
     return render(request, 'hotel_delete.html', {'hotel': hotel})
 
+@login_required
 def room_create(request, hotel_id):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -77,6 +83,7 @@ def room_create(request, hotel_id):
     hotel = HotelManager.get_hotel_by_id(hotel_id)
     return render(request, 'room_create.html', { 'hotel' : hotel })
 
+@login_required
 def room_update(request, room_id):
     room = RoomManager.get_room_by_id(room_id)
 
@@ -98,6 +105,7 @@ def room_update(request, room_id):
     # GET request の場合 ： Updateページへ
     return render(request, 'room_update.html', {'room': room})
 
+@login_required
 def room_delete(request, room_id):
     room = RoomManager.get_room_by_id(room_id)
     if not room:
